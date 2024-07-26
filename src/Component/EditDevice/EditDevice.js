@@ -10,13 +10,13 @@ import { API } from "../../Global";
 
 
 
-const dataValidationSchema = yup.object({
-    temperature:yup.string().required(),
-    humidity : yup.number().required()
+const deviceValidationSchema = yup.object({
+    deviceName:yup.string().required(),
+    description : yup.string().required()
     
    });
 
-   function EditData(){
+   function EditDevice(){
      
     const {id} = useParams();
     const[data,setData]=useState(null)
@@ -26,7 +26,7 @@ const dataValidationSchema = yup.object({
     },[])
     
     const getSingle = async()=>{
-        const data = await fetch(`${API}/data/${id}`,{
+        const data = await fetch(`${API}/device/${id}`,{
             method:"GET",
             headers : {
                 "Auth" : localStorage.getItem("token")
@@ -39,25 +39,28 @@ const dataValidationSchema = yup.object({
 return(
     <div>
        
-       { data ? <EditDataForm data={data}/>:"Loading..."}
+       { data ? <EditDeviceForm data={data}/>:"Loading..."}
     </div>
  )
 }
 
 
-function EditDataForm({ data }) {
+function EditDeviceForm({ data }) {
+    
     const navigate = useNavigate();
-    let deviceId = localStorage.getItem("device")
   
     const formik = useFormik({
+
       initialValues: {
-        temperature: data.temperature,
-        humidity: data.humidity,
+        deviceName: data.deviceName,
+        description: data.description,
       },
-      validationSchema: dataValidationSchema,
+
+      validationSchema: deviceValidationSchema,
+
       onSubmit: async (newData) => {
         try {
-          const response = await fetch(`${API}/data/${data._id}`, {
+          const response = await fetch(`${API}/device/${data._id}`, {
             method: 'PUT',
             body: JSON.stringify(newData),
             headers: {
@@ -68,9 +71,8 @@ function EditDataForm({ data }) {
           const res = await response.json();
           console.log(res);
           if (response.status === 200) {
-            alert('Data Updated successfully');
-            navigate(`/view/${deviceId}`);
-           
+            alert('Device updated successfully');
+            navigate('/home');
           }
         } catch (err) {
           alert(err.message);
@@ -82,22 +84,22 @@ function EditDataForm({ data }) {
       <form className="smallBox" onSubmit={formik.handleSubmit}>
         <h2>Edit Form</h2>
         <TextField
-          label="Temperature"
-          value={formik.values.temperature}
-          name="temperature"
+          label="DeviceName"
+          value={formik.values.deviceName}
+          name="deviceName"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.temperature && Boolean(formik.errors.temperature)}
-          helperText={formik.touched.temperature && formik.errors.temperature ? formik.errors.temperature : null}
+          error={formik.touched.deviceName && formik.errors.deviceName}
+          helperText={formik.touched.deviceName && formik.errors.deviceName ? formik.errors.deviceName : null}
         />
         <TextField
-          label="Humidity"
-          value={formik.values.humidity}
-          name="humidity"
+          label="Description"
+          value={formik.values.description}
+          name="description"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.humidity && Boolean(formik.errors.humidity)}
-          helperText={formik.touched.humidity && formik.errors.humidity ? formik.errors.humidity : null}
+          error={formik.touched.description && formik.errors.description}
+          helperText={formik.touched.description && formik.errors.description ? formik.errors.description : null}
         />
         <Button variant="contained" type="submit">
           Submit
@@ -106,4 +108,4 @@ function EditDataForm({ data }) {
     );
   }
   
- export default EditData ;
+ export default EditDevice;

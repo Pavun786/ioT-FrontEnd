@@ -17,7 +17,7 @@ const deviceValidationSchema = yup.object({
 function AddDevice(){
 
   const navigate =useNavigate()
- 
+  
 
   const formik = useFormik({
    

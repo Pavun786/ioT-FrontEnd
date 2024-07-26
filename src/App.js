@@ -10,6 +10,7 @@ import AddData from './Component/AddData/AddData';
 import EditData from './Component/EditData/EditData';
 import AddDevice from './Component/AddDevice/AddDevice';
 import ProtectedRoute from './ProtectedRoute';
+import EditDevice from './Component/EditDevice/EditDevice';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <AddDevice/>
           </ProtectedRoute>
           }/>
+         <Route path='/editDevice/:id' element={<EditDevice/>}/> 
         <Route path='/view/:id' element={
           <ProtectedRoute>
           <ViewData/>

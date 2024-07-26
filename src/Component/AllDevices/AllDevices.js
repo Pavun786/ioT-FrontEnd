@@ -31,6 +31,27 @@ import "../AllDevices/AllDevices.css"
   
         setDevices(res)
     }
+
+    const deleteDevice = async(id)=>{
+      
+      try{
+      let data = await fetch(`${API}/device/${id}`,{
+        method:"DELETE",
+        headers : {
+          "Auth" : localStorage.getItem("token")
+        }
+     })
+     let res = await data.json()
+  
+     if(data.status == 200){
+       alert("device deleted successfully")
+       getAllDevices()
+     }
+     }catch(err){
+        alert(err.message)
+     }
+  
+    }
   
     console.log(devices)
     return(
@@ -52,9 +73,9 @@ import "../AllDevices/AllDevices.css"
                   
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={()=> navigate(`/edit/${ele._id}`)}>Edit</Button>
+                  <Button size="small" onClick={()=> navigate(`/editDevice/${ele._id}`)}>Edit</Button>
                   <Button size="small" onClick={()=> navigate(`/view/${ele._id}`)}>View-Reports</Button>
-                  <Button size="small">Delete</Button>
+                  <Button size="small" onClick={()=> deleteDevice(ele._id)}>Delete</Button>
                 </CardActions>
                     </Card>
               )

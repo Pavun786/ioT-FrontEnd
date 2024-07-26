@@ -12,6 +12,8 @@ import { Button } from "@mui/material";
     const [data,setData] = useState("")
 
     const {id} = useParams()
+
+    let deviceId = localStorage.setItem("device",id)
     console.log(id)
 
     const navigate = useNavigate()

@@ -38,17 +38,24 @@ function AddData(){
 
    const addData = async(newData) => { 
 
-      const data = await fetch(`${API}/data/create`,{
-           method:"POST",
-           body:JSON.stringify(newData),
-           headers:{
-            "Content-Type": "application/json",
-            "Auth": localStorage.getItem("token")
-          }
-    })
-     const res = await data.json()
-     
-     navigate(`/view/${Id}`)
+   try{
+    const data = await fetch(`${API}/data/create`,{
+      method:"POST",
+      body:JSON.stringify(newData),
+      headers:{
+       "Content-Type": "application/json",
+       "Auth": localStorage.getItem("token")
+     }
+  })
+    const res = await data.json()
+    if(data.status == 200){
+     alert("Data added successfully")
+      navigate(`/view/${Id}`)
+    }
+
+   }catch(err){
+      alert(err.message)
+   }
     
   } 
     
