@@ -1,0 +1,15 @@
+.chart{
+    width: 70%;
+    margin: auto;
+}
+
+.viewData-container{
+    margin: 20px;
+}
+
+table,thead,tbody,th,tr,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+  
+}
